@@ -69,17 +69,17 @@ public class SmbSettingsActivity extends AppCompatActivity {
         executor.execute(() -> {
             SmbBackupTarget t = new SmbBackupTarget(
                     c.host, c.share, c.folder, c.domain, c.user, c.pass);
-            final String msg;
+            final String[] msgRef = new String[1];
             try {
                 t.connect();
-                msg = "连接成功，可以开始备份。";
+                msgRef[0] = "连接成功，可以开始备份。";
             } catch (Exception e) {
-                msg = "连接失败：" + e.getMessage();
+                msgRef[0] = "连接失败：" + e.getMessage();
             } finally {
                 t.close();
             }
             runOnUiThread(() -> {
-                b.tvTestResult.setText(msg);
+                b.tvTestResult.setText(msgRef[0]);
                 b.btnTest.setEnabled(true);
             });
         });
